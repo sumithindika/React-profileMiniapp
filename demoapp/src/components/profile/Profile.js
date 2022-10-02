@@ -3,7 +3,10 @@ import './Profile.scss';
 import { profileData } from './Profile-data';
 import { FaTrashAlt } from 'react-icons/fa';
 const Profile = () => {
+
   const [userProfile, setUserProfile] = useState(profileData);
+
+  const [search, setSearch] = useState("");
 
   const removeProfile = (id) => {
     //console.log(id);
@@ -11,11 +14,34 @@ const Profile = () => {
     setUserProfile(newProfileList);
   };
 
+  
+const handleInputChange =(e)=>{
+setSearch(e.target.value);
+
+  
+}
   return (
-    <section className="profile-sec">
+    <section className="profile-sec --flex-center">
       <div className="container">
         <h2 className="--text-light">Profile App</h2>
-        {userProfile.map((profile) => (
+<div className='--form-control'>
+<input type="text" placeholder='Enter Search Item ...' className='--width-100' 
+ onChange={handleInputChange} value={search} />
+
+</div>
+
+        
+        {userProfile.filter((value) =>{
+if(search === ""){
+return value
+
+
+}else if(value.name.toLocaleLowerCase().includes(search.toLowerCase())){
+
+return value
+}
+
+        }).map((profile) => (
           <div className="profile --card --flex-between" key={profile.id}>
             <img src={profile.img} alt="profile" />
             <div className="desc">
